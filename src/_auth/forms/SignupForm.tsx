@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { SignupValidation } from "@/lib/validation";
 import { z } from "zod";
 import Loader from "@/components/ui/shared/Loader";
+import { createUserAccount } from "@/lib/appwrite/api";
 
 
 
@@ -33,10 +34,10 @@ const SiginupForm = () => {
   })
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof SignupValidation>) {
-    //create user
-    const newUser = await createUserAccount(values);
-  }
+ async function onSubmit(values: z.infer<typeof SignupValidation>) {
+  const newUser = await createUserAccount(values);
+  console.log(newUser);
+ }
 
   return (
 
