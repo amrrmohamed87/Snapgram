@@ -7,19 +7,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/ui/form"
+import { Input } from "@/components/ui/ui/input";
+import { Button } from "@/components/ui/ui/button";
 import { useForm } from "react-hook-form";
 import { SignupValidation } from "@/lib/validation";
 import { z } from "zod";
 import Loader from "@/components/ui/shared/Loader";
 import { createUserAccount } from "@/lib/appwrite/api";
+import { useToast } from "@/components/ui/ui/use-toast";
 
 
 
 const SiginupForm = () => {
-
+  const { toast } = useToast()
   const isLoading = false;
 
   // 1. Define your form.
@@ -36,7 +37,12 @@ const SiginupForm = () => {
   // 2. Define a submit handler.
  async function onSubmit(values: z.infer<typeof SignupValidation>) {
   const newUser = await createUserAccount(values);
-  console.log(newUser);
+  
+  if (!newUser) {
+    return toast({ title: 'Sign up failed. Please tryb again.'})
+  }
+
+  //const session = await signInAccount()
  }
 
   return (
